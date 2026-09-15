@@ -1,0 +1,30 @@
+# Environment variables (contains secrets)
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+venv/
+.venv/
+dist/
+
+# Node
+node_modules/
+frontend/dist/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+postgres_data/
+
+# Logs
+*.log
