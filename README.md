@@ -15,20 +15,25 @@ graph TD
 
 ## Key Differentiators
 
-This implementation goes beyond the standard requirements by incorporating several production-grade features:
+This implementation goes beyond the standard requirements by incorporating several production-grade engineering practices. These are broken down in the dedicated sections below.
 
-### 1. Robust Automated & Manual Testing
-- **Automated Tests:** Comprehensive `pytest` suite (`backend/tests/`) covering critical API endpoints, session persistence, and the RAG/Skill routing logic (verifying precise switching between `qa` and `ship30` modes).
-- **Manual Test Plan:** A rigorous 12-step UI/UX manual test plan located in `docs/manual_test_plan.md` to guarantee flawless frontend behavior (state management, RAG citations, markdown rendering).
+## Security & Untrusted Artifact Sandboxing
 
-### 2. Untrusted Artifact Sandboxing (Security)
-- The React Artifact Viewer uses a defense-in-depth approach to safely render AI-generated HTML content.
+- The React Artifact Viewer uses a strict **defense-in-depth approach** to safely render AI-generated HTML content.
 - Generated code is injected into an isolated `<iframe sandbox="allow-scripts">` environment.
-- By deliberately omitting `allow-same-origin`, the artifact is completely blocked from accessing the parent application's cookies, local storage, or session state—preventing XSS vulnerabilities from potentially malicious AI-generated scripts.
+- By deliberately omitting `allow-same-origin`, the artifact is completely blocked from accessing the parent application's cookies, local storage, or session state.
+- **Why this matters:** It prevents Zero-Day XSS vulnerabilities from AI-hallucinated or maliciously prompted scripts.
 
-### 3. Graceful Fallbacks & Dual-LLM Support
-- The backend automatically switches between Local (Ollama) and Cloud (Anthropic) providers via a simple `.env` toggle.
-- The UI dynamically reflects the active model (e.g., `🖥️ tinyllama` vs `☁️ claude`) and fails gracefully if a provider goes offline.
+## Testing Strategy (Automated & Manual)
+
+- **Automated Tests:** Comprehensive `pytest` suite located in `backend/tests/`. It covers critical API endpoints, session persistence, and the core RAG/Skill routing logic (verifying precise switching between `qa` and `ship30` modes).
+- **Manual Test Plan:** A rigorous 12-step UI/UX manual test plan is documented in `docs/manual_test_plan.md` to guarantee flawless frontend behavior, state management, RAG citations, and markdown rendering.
+
+## Graceful Fallbacks & Resilience
+
+- **Dual-LLM Support:** The backend automatically switches between Local (Ollama) and Cloud (Anthropic) providers via a simple `.env` toggle.
+- **Dynamic UI:** The React frontend dynamically reflects the active model (e.g., `🖥️ tinyllama` vs `☁️ claude`) and degrades gracefully if a provider goes offline.
+- **Resilient Ingestion:** The DB ingestion pipeline uses a bundled dataset but includes a GitHub API fallback if external dependencies fail.
 
 ## Prerequisites
 
