@@ -13,10 +13,6 @@ graph TD
     Backend <-.->|API| Anthropic["Anthropic Claude (Cloud, optional)"]
 ```
 
-## Key Differentiators
-
-This implementation goes beyond the standard requirements by incorporating several production-grade engineering practices. These are broken down in the dedicated sections below.
-
 ## Security & Untrusted Artifact Sandboxing
 
 - The React Artifact Viewer uses a strict **defense-in-depth approach** to safely render AI-generated HTML content.
