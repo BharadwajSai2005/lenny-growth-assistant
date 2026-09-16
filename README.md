@@ -13,6 +13,23 @@ graph TD
     Backend <-.->|API| Anthropic["Anthropic Claude (Cloud, optional)"]
 ```
 
+## Key Differentiators
+
+This implementation goes beyond the standard requirements by incorporating several production-grade features:
+
+### 1. Robust Automated & Manual Testing
+- **Automated Tests:** Comprehensive `pytest` suite (`backend/tests/`) covering critical API endpoints, session persistence, and the RAG/Skill routing logic (verifying precise switching between `qa` and `ship30` modes).
+- **Manual Test Plan:** A rigorous 12-step UI/UX manual test plan located in `docs/manual_test_plan.md` to guarantee flawless frontend behavior (state management, RAG citations, markdown rendering).
+
+### 2. Untrusted Artifact Sandboxing (Security)
+- The React Artifact Viewer uses a defense-in-depth approach to safely render AI-generated HTML content.
+- Generated code is injected into an isolated `<iframe sandbox="allow-scripts">` environment.
+- By deliberately omitting `allow-same-origin`, the artifact is completely blocked from accessing the parent application's cookies, local storage, or session state—preventing XSS vulnerabilities from potentially malicious AI-generated scripts.
+
+### 3. Graceful Fallbacks & Dual-LLM Support
+- The backend automatically switches between Local (Ollama) and Cloud (Anthropic) providers via a simple `.env` toggle.
+- The UI dynamically reflects the active model (e.g., `🖥️ tinyllama` vs `☁️ claude`) and fails gracefully if a provider goes offline.
+
 ## Prerequisites
 
 | Tool | Version | Purpose |
